@@ -1,5 +1,25 @@
 const { JSDOM } = require("jsdom");
 
+async function crawlDOM(url) {
+  console.log(`Crawling ${url}`);
+  try {
+    const res = await fetch(url);
+    if (res.status > 399) {
+      console.log(`Error in fetching ${url}`);
+      return;
+    }
+    if (!res.headers.get("content-type").includes("text/html")) {
+      console.log(`Error in fetching ${url}`);
+      return;
+    }
+    const parsedRes = await res.text();
+    const links = getUrlFromHtml(parsedRes, "https://wagslane.dev");
+    console.log({ links });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
 function getUrlFromHtml(html, baseURL) {
   const urls = [];
   const linkElements = new JSDOM(html).window.document.querySelectorAll("a");
@@ -34,4 +54,4 @@ function normalizeUrl(url) {
   return hostPath;
 }
 
-module.exports = { normalizeUrl, getUrlFromHtml };
+module.exports = { normalizeUrl, getUrlFromHtml, crawlDOM };
