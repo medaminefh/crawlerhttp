@@ -1,4 +1,4 @@
-const { crawlDOM } = require("./crawl.js");
+import { crawlDOM } from "./crawl.js";
 
 function main() {
   if (process.argv.length < 3) {

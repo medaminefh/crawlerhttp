@@ -1,6 +1,6 @@
-const { JSDOM } = require("jsdom");
+import { JSDOM } from "jsdom";
 
-async function crawlDOM(url) {
+export async function crawlDOM(url) {
   console.log(`Crawling ${url}`);
   try {
     const res = await fetch(url);
@@ -20,7 +20,7 @@ async function crawlDOM(url) {
   }
 }
 
-function getUrlFromHtml(html, baseURL) {
+export function getUrlFromHtml(html, baseURL) {
   const urls = [];
   const linkElements = new JSDOM(html).window.document.querySelectorAll("a");
 
@@ -44,7 +44,7 @@ function getUrlFromHtml(html, baseURL) {
   return urls;
 }
 
-function normalizeUrl(url) {
+export function normalizeUrl(url) {
   const urlObj = new URL(url);
   const hostPath = `${urlObj.hostname}${urlObj.pathname}`;
   if (hostPath && hostPath.endsWith("/")) {
@@ -53,5 +53,3 @@ function normalizeUrl(url) {
 
   return hostPath;
 }
-
-module.exports = { normalizeUrl, getUrlFromHtml, crawlDOM };

@@ -1,5 +1,5 @@
-const { normalizeUrl, getUrlFromHtml } = require("./crawl");
-const { test, expect } = require("@jest/globals");
+import { normalizeUrl, getUrlFromHtml } from "./crawl";
+import { test, expect } from "@jest/globals";
 
 test("normalizeUrl", () => {
   const input = "https://www.google.com/path";
